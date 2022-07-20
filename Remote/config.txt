@@ -1,0 +1,4 @@
+dll=https://ILRuntimeForWebGLAndWechatMiniGame.github.io/Codes.dll
+//pdb=https://ILRuntimeForWebGLAndWechatMiniGame.github.io/Codes.pdb
+entryClass=AEntrance
+entryMethod=Init
