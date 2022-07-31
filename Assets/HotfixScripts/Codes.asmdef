@@ -2,7 +2,8 @@
     "name": "Codes",
     "rootNamespace": "",
     "references": [
-        "GUID:9bf602a0bc7f5e142872d5bdfcd2a2a9"
+        "GUID:9bf602a0bc7f5e142872d5bdfcd2a2a9",
+        "GUID:8b65d8710c3b04373a41cbf6b777ee65"
     ],
     "includePlatforms": [
         "Editor"

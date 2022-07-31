@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class Main : MonoBehaviour
 {
-    string configurl = "https://yukuyoulei.github.io/ILRuntimeForWebGLAndWechatMiniGame/Remote/config.txt";
+    string configurl = "https://cntest.100sjump.com/webgl/config.txt";//"https://yukuyoulei.github.io/ILRuntimeForWebGLAndWechatMiniGame/Remote/config.txt";
     void Start()
     {
         UIEntry.DebugLog($"Downloading config {configurl}");
@@ -33,10 +33,8 @@ public class Main : MonoBehaviour
             if (string.IsNullOrEmpty(l))
                 continue;
             var aline = l.Split(new char[] { '=' }, 2);
-            UIEntry.DebugLog($"line {l}");
             if (aline.Length != 2)
                 continue;
-            UIEntry.DebugLog($"key {aline[0]} value {aline[1]}");
             dConfigContents[aline[0]] = aline[1];
         }
         var dll = GetConfig("dll");
@@ -58,8 +56,7 @@ public class Main : MonoBehaviour
             yield return www.SendWebRequest();
             pdbbytes = www.downloadHandler.data;
         }
-        UIEntry.DebugLog($"ILRuntimeHelper.LoadDll");
-        ILRuntimeHelper.LoadDll(dllbytes, pdbbytes, GetConfig("entryClass"), GetConfig("entryMethod"));
+        ILRuntimeHelper.LoadDll(dllbytes, pdbbytes, GetConfig("entryClass"), GetConfig("entryMethod"), dConfigContents);
     }
     private string GetConfig(string tag)
     {
@@ -68,9 +65,4 @@ public class Main : MonoBehaviour
         return value;
     }
 
-}
-
-struct TestData
-{
-    public int data;
 }

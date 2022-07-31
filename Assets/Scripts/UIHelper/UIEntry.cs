@@ -10,7 +10,7 @@ public class UIEntry : MonoBehaviour
 	void Start()
 	{
 		sinstance = this;
-		Log = transform.Find("Log").GetComponent<Text>();
+		Log = transform.GetComponentInChildren<Text>();
 	}
 	void OnLog(string log)
 	{
