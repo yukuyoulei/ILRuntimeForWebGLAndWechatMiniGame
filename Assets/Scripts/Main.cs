@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class Main : MonoBehaviour
 {
-    string configurl = "https://cntest.100sjump.com/webgl/config.txt";//"https://yukuyoulei.github.io/ILRuntimeForWebGLAndWechatMiniGame/Remote/config.txt";
+    string configurl = "https://yukuyoulei.github.io/ILRuntimeForWebGLAndWechatMiniGame/Remote/config.txt";
     void Start()
     {
         UIEntry.DebugLog($"Downloading config {configurl}");
