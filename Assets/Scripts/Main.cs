@@ -22,6 +22,11 @@ public class Main : MonoBehaviour
     {
         var www = UnityWebRequest.Get(configurl);
         yield return www.SendWebRequest();
+        if(!string.IsNullOrEmpty(www.error))
+        {
+            UIEntry.DebugLog($"www.error {www.error}");
+            yield return null;
+        }
         var lines = www.downloadHandler.text.Split(new char[] { '\r', '\n' });
         foreach (var line in lines)
         {

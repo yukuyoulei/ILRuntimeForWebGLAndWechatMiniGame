@@ -26,10 +26,21 @@ namespace ILRuntime.Runtime.Generated
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             UIEntry_Binding.Register(app);
+            UnityEngine_UI_Button_Binding.Register(app);
+            UnityEngine_Events_UnityEvent_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_String_Binding.Register(app);
+            System_Int32_Binding.Register(app);
+            System_String_Binding.Register(app);
+            System_Runtime_CompilerServices_AsyncVoidMethodBuilder_Binding.Register(app);
+            UnityEngine_UI_InputField_Binding.Register(app);
+            UnityEngine_Networking_UnityWebRequest_Binding.Register(app);
+            System_Runtime_CompilerServices_TaskAwaiter_Binding.Register(app);
+            UnityEngine_Networking_DownloadHandler_Binding.Register(app);
+            System_Threading_Tasks_TaskCompletionSource_1_Object_Binding.Register(app);
+            UnityEngine_AsyncOperation_Binding.Register(app);
+            System_Threading_Tasks_Task_Binding.Register(app);
             System_Threading_SynchronizationContext_Binding.Register(app);
             UnityWebSocket_MessageEventArgs_Binding.Register(app);
-            System_String_Binding.Register(app);
             UnityWebSocket_ErrorEventArgs_Binding.Register(app);
             UnityWebSocket_CloseEventArgs_Binding.Register(app);
             System_Action_1_CloseEventArgs_Binding.Register(app);

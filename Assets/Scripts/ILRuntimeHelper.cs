@@ -10,14 +10,26 @@ public static class ILRuntimeHelper
     public static void LoadDll(byte[] dll, byte[] pdb, string entryClass, string entryMethod, Dictionary<string, string> dConfigContents)
     {
         appdomain = new ILRuntime.Runtime.Enviorment.AppDomain(ILRuntime.Runtime.ILRuntimeJITFlags.JITOnDemand);
-        appdomain.LoadAssembly(new MemoryStream(dll), pdb == null ? null : new MemoryStream(pdb), new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider());
+        InitILRuntime(appdomain);
         InitializeILRuntime();
         RegisterDelegates();
+        appdomain.LoadAssembly(new MemoryStream(dll), pdb == null ? null : new MemoryStream(pdb), new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider());
         OnHotFixLoaded(entryClass, entryMethod, dConfigContents);
     }
-
+    static void InitILRuntime(ILRuntime.Runtime.Enviorment.AppDomain domain)
+    {
+        //这里需要注册所有热更DLL中用到的跨域继承Adapter，否则无法正确抓取引用
+        domain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
+        domain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
+        domain.RegisterCrossBindingAdaptor(new IAsyncStateMachineClassInheritanceAdaptor());
+        domain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());
+        domain.RegisterValueTypeBinder(typeof(Vector2), new Vector2Binder());
+        domain.RegisterValueTypeBinder(typeof(Quaternion), new QuaternionBinder());
+    }
     private static void RegisterDelegates()
     {
+        appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.AsyncOperation>();
+
         appdomain.DelegateManager.RegisterMethodDelegate<System.Object, System.EventArgs>();
         appdomain.DelegateManager.RegisterDelegateConvertor<System.EventHandler<System.EventArgs>>((act) =>
         {
@@ -58,6 +70,13 @@ public static class ILRuntimeHelper
             return new System.EventHandler<UnityWebSocket.MessageEventArgs>((sender, e) =>
             {
                 ((Action<System.Object, UnityWebSocket.MessageEventArgs>)act)(sender, e);
+            });
+        });
+        appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
+        {
+            return new UnityEngine.Events.UnityAction(() =>
+            {
+                ((Action)act)();
             });
         });
 

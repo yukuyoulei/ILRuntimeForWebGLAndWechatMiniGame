@@ -5,20 +5,22 @@ using UnityEngine.UI;
 
 public class UIEntry : MonoBehaviour
 {
-	private static UIEntry sinstance;
-	Text Log;
-	void Start()
-	{
-		sinstance = this;
-		Log = transform.GetComponentInChildren<Text>();
-	}
-	void OnLog(string log)
-	{
-		Log.text += log + "\r\n";
-	}
+    private static UIEntry sinstance;
+    public static UIEntry Instance => sinstance;
+    public Text Log;
+    public InputField inputPrompt;
+    public Button btnSend;
+    void Start()
+    {
+        sinstance = this;
+    }
+    void OnLog(string log)
+    {
+        Log.text += log + "\r\n";
+    }
 
-	public static void DebugLog(string log)
-	{
-		sinstance.OnLog(log);
-	}
+    public static void DebugLog(string log)
+    {
+        sinstance.OnLog(log);
+    }
 }
